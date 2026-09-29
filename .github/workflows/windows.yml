@@ -1,0 +1,157 @@
+name: Windows build and test
+
+# Runs Corman Lisp on a real x64 Windows machine (32-bit programs run natively there).
+# Started by hand for now (Actions tab -> "Windows build and test" -> Run workflow), because it has not
+# been run yet and may need fixes. Once it is green, add a `pull_request:` trigger.
+#
+# Two independent jobs:
+#   release-test  runs test/harness.lisp against a RELEASED Corman Lisp build (no compiling). This is the
+#                 quickest way to find out whether the harness works, and gives a known-good baseline.
+#   build         builds the kernel and console with the installed Visual Studio (2022, toolset v143 rather
+#                 than the project's v140_xp), rebuilds CormanLisp.img with makeimg.bat, then runs the harness.
+#
+# Failing tests do not fail a job (many HyperSpec examples fail on Corman by design). A job fails when the run
+# does not finish, or when tests regress against a committed baseline in test/baselines/.
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_release:
+        description: 'Run the harness against a released build'
+        type: boolean
+        default: true
+      release_url:
+        description: 'Release asset (.zip or .msi) to use; empty = latest release of sharplispers/cormanlisp'
+        type: string
+        default: ''
+      build:
+        description: 'Build from source and run the harness'
+        type: boolean
+        default: true
+      toolset:
+        description: 'MSBuild PlatformToolset for the build (project default is v140_xp, not installed on runners)'
+        type: string
+        default: 'v143'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-test:
+    if: ${{ inputs.test_release }}
+    runs-on: windows-2022
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Fetch a released build
+        id: fetch
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_URL: ${{ inputs.release_url }}
+        run: ./.github/scripts/fetch-release.ps1 -Dest "$env:RUNNER_TEMP\corman-release" -Url "$env:RELEASE_URL"
+
+      - name: Run the test harness
+        shell: pwsh
+        run: >
+          ./.github/scripts/run-harness.ps1
+          -CormanDir "${{ steps.fetch.outputs.corman_dir }}"
+          -Label "release-run${{ github.run_number }}"
+          -OutFile "results\release.jsonl"
+          -Baseline "test\baselines\release.jsonl"
+
+      - name: Upload results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: results-release
+          path: results/
+          if-no-files-found: warn
+
+  build:
+    if: ${{ inputs.build }}
+    runs-on: windows-2022
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Build zlib, the kernel DLL and the console
+        shell: pwsh
+        env:
+          TOOLSET: ${{ inputs.toolset }}
+        # PlatformToolset and WindowsTargetPlatformVersion on the command line override the values in the
+        # .vcxproj files (v140_xp / SDK 8.1), which are not installed on the runner. Outputs land in the
+        # repository root: clconsole.exe and CormanLispServer.dll.
+        run: |
+          msbuild src_vc15.sln /m /nologo /verbosity:minimal `
+            /p:Configuration=Standard /p:Platform=Win32 `
+            "/p:PlatformToolset=$env:TOOLSET" /p:WindowsTargetPlatformVersion=10.0 `
+            "/t:zlib;CormanLispServer;clconsole" `
+            "/flp:logfile=build.log;verbosity=normal" /bl:build.binlog
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          foreach ($f in 'clconsole.exe', 'CormanLispServer.dll') {
+            if (-not (Test-Path $f)) { Write-Error "$f was not produced"; exit 1 }
+          }
+          Get-Item clconsole.exe, CormanLispServer.dll | Format-Table Name, Length
+
+      - name: Build CormanLisp.img (makeimg.bat)
+        shell: pwsh
+        run: |
+          $stdin = Join-Path $env:RUNNER_TEMP 'empty-stdin.txt'
+          New-Item -ItemType File -Force -Path $stdin | Out-Null
+          $p = Start-Process cmd.exe -ArgumentList '/c', 'makeimg.bat' -RedirectStandardInput $stdin `
+            -RedirectStandardOutput makeimg.log -RedirectStandardError makeimg.err.log -PassThru -NoNewWindow
+          if (-not $p.WaitForExit(30 * 60 * 1000)) { Stop-Process -Id $p.Id -Force; Write-Warning 'makeimg timed out' }
+          Get-Content makeimg.log -Tail 40
+          if (Test-Path makeimg.err.log) { Get-Content makeimg.err.log -Tail 40 }
+          if (-not (Test-Path CormanLisp.img)) { Write-Error 'CormanLisp.img was not produced'; exit 1 }
+          Get-Item CormanLisp.img | Format-Table Name, Length
+
+      - name: Run the test harness
+        shell: pwsh
+        run: >
+          ./.github/scripts/run-harness.ps1
+          -CormanDir "$env:GITHUB_WORKSPACE"
+          -Label "build-${{ inputs.toolset }}-run${{ github.run_number }}"
+          -OutFile "results\build.jsonl"
+          -Baseline "test\baselines\build.jsonl"
+
+      - name: Upload logs and results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs-and-results
+          path: |
+            results/
+            build.log
+            build.binlog
+            makeimg.log
+            makeimg.err.log
+          if-no-files-found: warn
+
+      - name: Upload the built binaries
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: corman-build
+          path: |
+            clconsole.exe
+            CormanLispServer.dll
+            CormanLisp.img
+          retention-days: 7
+          if-no-files-found: ignore
