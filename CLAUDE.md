@@ -70,6 +70,9 @@ Do not load both in one image.
   `.exe`/`.dll` when the output file has that extension.
 - Windows APIs are declared with `#! ... !#` C-header blocks, `DEFUN-DLL`, `DEFWINAPI`. See `docs/agent/04-ffi-and-windows.md`.
 - Tabs are used for indentation in most `Sys/` files. Match the file you are editing.
+- New to Common Lisp or unsure of an idiom? `docs/agent/common-lisp-primer.md` is a short checklist of common mistakes
+  (`case` on strings, `return` inside `loop`, lost multiple values, ...). This repo's `docs/agent/03-lisp-notes.md` wins where they differ.
+  Check structure with `python3 test/tools/lispcheck.py <file>` after editing Lisp.
 
 ## Known gaps (short list)
 
