@@ -23,8 +23,10 @@ Those files are symbol tables and documentation indexes.
 
 ## Static checks worth doing on Lisp edits
 
-- Balanced parentheses and `#| |#` blocks. A quick script can read each top-level form.
-  Do not use a tool that reformats or re-indents; it would change CRLF/tab style.
+- Balanced parentheses, strings and `#| |#` blocks: run `python3 test/tools/lispcheck.py <file>` (no Lisp needed; understands
+  Corman's `#! ... !#` blocks, `#\(` character literals, `|symbols|`). It reports the line and column of an unclosed or stray
+  parenthesis, and hints at the likely culprit when a column-1 `(` appears inside an open form.
+  It checks structure only, not that the file loads. Do not use a tool that reformats or re-indents; it would change CRLF/tab style.
 - No new forward reference to something defined later in the load order.
 - If you add a new file to `Sys/`, add a `load-file` line in the right place in `load-sys2.lisp` and say why that position.
 - If you add an exported symbol, check the package's `:export` list or `cl-symbols.lisp` conventions.

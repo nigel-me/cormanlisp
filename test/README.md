@@ -201,6 +201,24 @@ The file format is JSON Lines (one JSON object per line), so you can also inspec
 Record types are `environment`, `result`, `summary`, and (with tracing) `begin`. Field-by-field details are in
 [`docs/agent/08-test-harness.md`](../docs/agent/08-test-harness.md).
 
+## Checking a Lisp file's structure
+
+`test/tools/lispcheck.py` finds unbalanced parentheses, unterminated strings and unterminated `#| |#` comments without needing a
+Lisp, and reports the line and column:
+
+```
+python test\tools\lispcheck.py Sys\myfile.lisp
+```
+
+It understands Corman's `#! ... !#` C-declaration blocks (use `--generic` for plain Common Lisp), `#\(` character
+literals and `|symbols|`. When a file has an error it also prints hints, such as a `(` in column 1 inside a form that is
+still open, which usually marks where a `)` went missing. Use `--strict` to make warnings (for example mixed CRLF/LF line endings)
+fail the run. It checks structure only; it does not tell you the file will load.
+
+Run over the whole repository it reports two files: `test/bugs.lisp` (a saved mailing-list message, not code) and
+`Libraries/sql-odbc-0.85/doc/sql-odbc-documentation.lisp` (truncated mid-sentence with stray NUL bytes; a genuine defect
+in the upstream file).
+
 ## Troubleshooting
 
 | What you see | Likely cause and what to do |
