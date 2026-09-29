@@ -17,6 +17,7 @@ repo root and the shipped manual in `documentation/CormanLisp.html`.
 | [06-known-gaps.md](06-known-gaps.md) | You want to know what is missing or wrong, with file references. |
 | [07-agent-workflows.md](07-agent-workflows.md) | You want checklists for common tasks and safe ways to verify without Windows. |
 | [08-test-harness.md](08-test-harness.md) | You want machine-readable test results, or to diff two runs (e.g. two builds). |
+| [analysis-notes.md](analysis-notes.md) | You want the reasoning behind the recommendations (Quicklisp, toolchain, ideas, testing, VM choice, primer evaluation). |
 | [09-ci.md](09-ci.md) | You want to run the Windows build and tests on GitHub Actions, or understand what CI does and does not check. |
 | [common-lisp-primer.md](common-lisp-primer.md) | You are writing Common Lisp and want a checklist of the mistakes that are easy to make. Implementation-neutral; `03-lisp-notes.md` wins where they differ. |
 

@@ -5,7 +5,7 @@ repo and a cloud container is temporary, so this file is the memory. **Update it
 finished items to "Done", keep "Open tasks" honest, and date the changes.
 
 Last updated: 2026-09-29. Branch `claude/sharp-heisenberg-51u1x4`, pull request nigel-me/cormanlisp#1.
-Start with `CLAUDE.md`, then `docs/agent/README.md`.
+Start with `CLAUDE.md`, then `docs/agent/README.md`. The reasoning behind the recommendations is in `docs/agent/analysis-notes.md`.
 
 ## What this project is, and the user's goals
 
@@ -69,10 +69,11 @@ Constraint stated by the owner: do not sacrifice the good Windows integration fo
 - `test/bugs.lisp` is a saved mailing-list message, not code.
 - The manual's license text is outdated; `LICENSE.txt` (MIT) is authoritative.
 
-## Lost with the cloud session
+## Not in the repo
 
-The raw answers from the primer evaluation (the numbers and conclusions are in `test/agent-eval/README.md`) and the scratch files. Nothing else
-important; everything else is in the commits above.
+The full conversation transcript, and the reasoning that led to these decisions except as summarised in `analysis-notes.md`.
+The raw answers from the primer evaluation are saved in `test/agent-eval/results/`. Scratch files and tools installed in the cloud
+container (`sbcl`, `actionlint`) are not kept; both are quick to reinstall.
 
 ## Environment notes for cloud sessions
 
