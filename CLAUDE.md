@@ -5,6 +5,7 @@ kernel written in C++/x86 assembly, a saved-image workflow, and a Win32/COM/.NET
 MIT licensed (see `LICENSE.txt`; the 2000s-era manual still describes older license terms, so trust `LICENSE.txt`).
 
 Detailed notes live in `docs/agent/` (start at `docs/agent/README.md`). This file is the short version.
+Continuing earlier work? Read `docs/agent/STATUS.md` (done, verified vs unverified, open tasks, decisions) and update it when you finish.
 
 ## Ground rules for agents
 

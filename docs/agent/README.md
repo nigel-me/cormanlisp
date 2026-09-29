@@ -3,6 +3,8 @@
 A working reference for agents (and new contributors) touching this repo. It complements `CLAUDE.md` at the
 repo root and the shipped manual in `documentation/CormanLisp.html`.
 
+**Picking the work up in a new session? Read [STATUS.md](STATUS.md) first** (what is done, what is verified, open tasks, decisions).
+
 ## Read in this order
 
 | File | Read it when |
