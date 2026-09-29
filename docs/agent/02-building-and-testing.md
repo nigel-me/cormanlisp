@@ -60,6 +60,11 @@ There is no CI and no test runner script. Tests are Lisp files loaded into a run
 - Regression testing after a kernel change: rebuild the image, run all of `test/`, and diff the output against a
   run on a known-good build.
 
+### Machine-readable runs
+
+`test/harness.lisp` wraps these files and writes JSON Lines results; `test/tools/results.py` summarises and diffs them.
+See [08](08-test-harness.md).
+
 ### Console
 
 `clconsole.exe` starts a console REPL. `-execute file.lisp` runs a file **[source: `makeimg.bat`]**. `-image ""` is passed when building the image, presumably to start

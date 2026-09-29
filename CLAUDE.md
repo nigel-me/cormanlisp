@@ -52,9 +52,13 @@ Details and the modern-toolchain notes are in `docs/agent/02-building-and-testin
 
 ## Testing
 
-There is no automated CI. Tests are Lisp files run from a Corman REPL or console. From the install directory:
-`(load "test/ansi-examples.lisp")` runs the ANSI chapter examples; other files in `test/` are loaded individually.
-See `docs/agent/02-building-and-testing.md`.
+There is no CI. Tests are Lisp files run from a Corman REPL or console (Windows only).
+Machine-readable runs: `(load "test/harness.lisp")` then `(test-harness:run-all :label "...")`, or
+`clconsole -execute test\run-tests.lisp`. That writes `test-results.jsonl`; compare runs with
+`python3 test/tools/results.py diff baseline.jsonl new.jsonl` (works on any OS). Details, output format and
+unverified assumptions: `docs/agent/08-test-harness.md`.
+The older runner is still there: `(load "test/ansi-examples.lisp")` prints `PASSED:`/`FAILED:` lines.
+Do not load both in one image.
 
 ## Conventions worth knowing before you edit Lisp
 

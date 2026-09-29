@@ -14,6 +14,7 @@ repo root and the shipped manual in `documentation/CormanLisp.html`.
 | [05-kernel-and-runtime.md](05-kernel-and-runtime.md) | You are near the C++/asm kernel, the code generator, the GC, or register conventions. |
 | [06-known-gaps.md](06-known-gaps.md) | You want to know what is missing or wrong, with file references. |
 | [07-agent-workflows.md](07-agent-workflows.md) | You want checklists for common tasks and safe ways to verify without Windows. |
+| [08-test-harness.md](08-test-harness.md) | You want machine-readable test results, or to diff two runs (e.g. two builds). |
 
 ## Provenance tags
 
