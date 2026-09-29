@@ -34,7 +34,7 @@ Everything here was found by reading the code. **Nothing was run.** "Impact" is 
 | Kernel written to MSVC-x86-specific asm, naked functions, SEH | `CormanLispServer/` | Other compilers need substantial rewrites. See [05](05-kernel-and-runtime.md). |
 | MFC IDE | `CormanLispIDE/` | Ties the IDE to MSVC and to Windows. |
 | `dlltemplate` links CRT libraries by name (`vcruntimed.lib`, `ucrtd.lib`) | `dlltemplate.vcxproj` | Fragile across toolchain versions. |
-| No CI; no automated test runner | repo root | Nothing catches regressions automatically. |
+| CI exists only for the tooling; the Windows workflow is manual and has never run | `.github/workflows/` | Nothing yet catches Corman Lisp regressions automatically. See [09](09-ci.md). |
 | OpenSSL 1.1.x prebuilt DLLs committed | repo root | End of life; security-relevant. |
 | Runtime redistribution steps commented out in `makezip.bat` | `makezip.bat` | Release packaging needs manual care. |
 | `WINVER 0x0501` (XP) | `CormanLispIDE/include/Stdafx.h` | Old platform floor. |

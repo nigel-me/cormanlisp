@@ -52,7 +52,9 @@ Details and the modern-toolchain notes are in `docs/agent/02-building-and-testin
 
 ## Testing
 
-There is no CI. Tests are Lisp files run from a Corman REPL or console (Windows only).
+CI (`.github/workflows/`): `tools-check.yml` runs on every PR on Linux and checks the repo's own tooling (not Corman Lisp itself).
+`windows.yml` builds and tests on a real Windows runner but is manual for now (unverified: it has never run); details in
+`docs/agent/09-ci.md`. Corman Lisp tests are Lisp files run from a Corman REPL or console (Windows only).
 Machine-readable runs: `(load "test/harness.lisp")` then `(test-harness:run-all :label "...")`, or
 `clconsole -execute test\run-tests.lisp`. That writes `test-results.jsonl`; compare runs with
 `python3 test/tools/results.py diff baseline.jsonl new.jsonl` (works on any OS). Details, output format and

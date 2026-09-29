@@ -1,0 +1,64 @@
+name: Tools check
+
+# Fast, Linux-only checks of the repository's own tooling. These need no Windows and no Corman Lisp:
+#   - every Lisp file is structurally balanced (test/tools/lispcheck.py)
+#   - the test harness and results tool work end to end, using SBCL as a stand-in Lisp
+#   - the Common Lisp evaluation kit's tasks are valid (test/agent-eval)
+# It does NOT build or test Corman Lisp itself; see windows.yml for that.
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tools:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install SBCL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sbcl
+
+      - name: Python tools compile
+        run: python3 -m py_compile test/tools/*.py test/agent-eval/*.py
+
+      - name: Lisp structure check
+        # Two files are known not to be code: test/bugs.lisp is a saved mailing-list message, and the
+        # sql-odbc documentation file is truncated (stray NUL bytes, unterminated #| comment).
+        run: |
+          find . -path ./.git -prune -o \( -name '*.lisp' -o -name '*.asd' -o -name '*.lsp' -o -name '*.cl' \) -print \
+            | grep -v -e '^./test/bugs\.lisp$' -e 'sql-odbc-documentation\.lisp$' > lispfiles.txt
+          echo "checking $(wc -l < lispfiles.txt) files"
+          xargs -d '\n' -a lispfiles.txt python3 test/tools/lispcheck.py
+
+      - name: Test harness under SBCL
+        timeout-minutes: 5
+        run: |
+          sbcl --noinform --non-interactive --load test/harness.lisp \
+            --eval '(test-harness:run-all :label "ci-sbcl" :output-file "sbcl-results.jsonl" :files (list "ansi-chapter-2.lisp" "ansi-chapter-3.lisp" "ansi-chapter-4.lisp" "ansi-chapter-5.lisp" "ansi-chapter-6.lisp" "ansi-chapter-7.lisp" "ansi-chapter-8.lisp"))' \
+            > sbcl-run.log 2>&1 || true
+          tail -5 sbcl-run.log
+          python3 test/tools/results.py check sbcl-results.jsonl
+          python3 test/tools/results.py diff sbcl-results.jsonl sbcl-results.jsonl
+          { echo '### Harness under SBCL (machinery check only)'; echo '```'; python3 test/tools/results.py summary sbcl-results.jsonl; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Evaluation kit self-test
+        timeout-minutes: 10
+        run: |
+          python3 test/agent-eval/grade.py --set easy --selftest
+          python3 test/agent-eval/grade.py --set hard --selftest
