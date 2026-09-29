@@ -42,3 +42,6 @@ installer/LICENSE.rtf
 unpacked/*
 CormanLisp*.zip
 
+
+# Test harness output
+test-results*.jsonl
