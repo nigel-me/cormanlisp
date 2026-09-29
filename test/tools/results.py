@@ -8,8 +8,8 @@
 Uses only the Python standard library, so it runs anywhere (for example on a
 machine without Windows, on results copied off a Windows build).
 
-Exit codes: 0 = fine, 1 = regressions (diff) / problems in the run (summary, check),
-2 = unreadable input.
+Exit codes: 0 = fine, 1 = regressions (diff) or problems in the run (summary, check).
+A file that cannot be opened stops with a message and a non-zero exit code.
 """
 
 import argparse

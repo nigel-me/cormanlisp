@@ -56,7 +56,7 @@ There is no CI. Tests are Lisp files run from a Corman REPL or console (Windows 
 Machine-readable runs: `(load "test/harness.lisp")` then `(test-harness:run-all :label "...")`, or
 `clconsole -execute test\run-tests.lisp`. That writes `test-results.jsonl`; compare runs with
 `python3 test/tools/results.py diff baseline.jsonl new.jsonl` (works on any OS). Details, output format and
-unverified assumptions: `docs/agent/08-test-harness.md`.
+unverified assumptions: `docs/agent/08-test-harness.md`; human-oriented guide: `test/README.md`.
 The older runner is still there: `(load "test/ansi-examples.lisp")` prints `PASSED:`/`FAILED:` lines.
 Do not load both in one image.
 

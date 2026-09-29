@@ -1,7 +1,7 @@
 # 08. Test harness
 
 `test/harness.lisp` runs the existing test files and writes machine-readable results.
-`test/tools/results.py` summarises and compares runs. Purpose: an objective pass/fail signal for any change
+`test/tools/results.py` summarises and compares runs. A human-oriented guide is in [`test/README.md`](../../test/README.md). Purpose: an objective pass/fail signal for any change
 (kernel, compiler, pathname layer, toolchain) that a person or agent can diff against a known-good run.
 
 **Status:** written on Linux. The harness logic (recording, JSON output, error isolation, counting, comparison,
