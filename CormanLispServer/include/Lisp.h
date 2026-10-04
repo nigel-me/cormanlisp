@@ -1929,6 +1929,10 @@ __asm								\
 #define LISP_TO_FOREIGN()														\
 	__asm																		\
 	{																			\
+        __asm cld \
+        __asm push esi \
+        __asm call ThreadQV \
+        __asm mov esi, eax \
 		__asm		std															\
         __asm		mov		eax, [esi + (STACK_MARKER_INDEX_Index * 4)]			\
 		__asm		cmp		eax, StackMarkersMax								\
@@ -1940,15 +1944,14 @@ __asm								\
 		__asm		mov		ecx, 0												\
 		__asm		call	Memory_Report										\
 		__asm	t11000:															\
-		__asm		push	eax													\
         __asm		mov		[esi + eax*2 + (STACK_MARKERS_Index * 4)], esp		\
         __asm		lea		edi, [esi + eax*2 + ((STACK_MARKERS_Index + 1) * 4)]\
-		__asm		pop		eax													\
         __asm		push    0													\
         __asm		pop		dword ptr [esi + eax*2 + ((STACK_MARKERS_Index + 1) * 4)]	\
 		__asm		add		eax, 4												\
         __asm		mov		[esi + (STACK_MARKER_INDEX_Index * 4)], eax			\
         __asm		cld															\
+        __asm pop esi \
 	}
 
 // push lisp stack context
