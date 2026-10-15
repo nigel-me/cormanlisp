@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Standard|Win32">
+      <Configuration>Standard</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="delstaticlib.bat" />
+    <None Include="MakefileStatic.mk" />
+    <None Include="makestaticlib.bat" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="CormanLispServer.v143.vcxproj">
+      <Project>{F9EEF0A3-17DF-4E5A-AA4C-CE02A4819417}</Project>
+      <Private>false</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <ProjectGuid>{80008536-4BA1-45EE-BD05-2649B35D5973}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CormanName>CormanLispStatic</CormanName>
+  </PropertyGroup>
+  <Import Project="..\build\v143\settings.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Standard|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings"></ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Standard|Win32'"></ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Standard|Win32'">
+    <OutDir>$(SolutionDir)CormanLispServer\bin\</OutDir>
+    <IntDir>$(SolutionDir)CormanLispServer\bin\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup></ItemDefinitionGroup>
+  <Import Project="..\build\v143\outputs.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets"></ImportGroup>
+  <ItemGroup>
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\decoder.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\distorm.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\instructions.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\insts.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\mnemonics.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\operands.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\prefix.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\textdefs.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\wstring.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CharBuf.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CoConnectionPoint.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CoCormanLisp.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CoEnumConnectionPoints.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CoEnumConnections.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Compx86.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\CormanLispServer.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Gc.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Lisp.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Lispfunc.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\LispMath.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\LispThreadQueue.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\MemoryReport.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Read.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Stdafx.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\ThreadClasses.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Unassemble.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\UserInfo.obj" />
+    <CormanKernelObject Include="$(CormanBuildRoot)obj\CormanLispServer\Write.obj" />
+  </ItemGroup>
+  <Import Project="..\build\v143\operations.targets" />
+  <ItemGroup>
+    <CustomBuild Include="..\build\v143\operations.targets">
+      <Command>"$(VCToolsInstallDir)bin\HostX64\x86\lib.exe" /nologo /out:"$(CormanLibDir)CormanLispStatic.lib" @"$(IntDir)kernel-objects.rsp"</Command>
+      <AdditionalInputs>@(CormanKernelObject);%(AdditionalInputs)</AdditionalInputs>
+      <Outputs>$(CormanLibDir)CormanLispStatic.lib</Outputs>
+      <Message>Archive the explicit dynamic-kernel object set for the static console.</Message>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

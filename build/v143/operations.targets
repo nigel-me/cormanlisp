@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CormanPreflight" BeforeTargets="PrepareForBuild;Clean">
+    <Error Condition="'$(Configuration)|$(Platform)'!='Standard|Win32'" Text="Only Standard/Win32 is supported." />
+    <Error Condition="'$(PlatformToolset)'!='v143' Or '$(VCToolsVersion)'!='14.41.34120' Or '$(WindowsTargetPlatformVersion)'!='10.0.26100.0'" Text="The validated v143 toolset and SDK are required." />
+    <Error Condition="'$(CormanBuildRoot)'!='$(CormanSourceRoot).build\v143\ide\$(Platform)\$(Configuration)\'" Text="Build and Clean must use the isolated IDE artifact root." />
+    <MakeDir Directories="$(CormanLibDir);$(CormanRuntimeDir);$(CormanBuildRoot)logs" />
+  </Target>
+  <Target Name="CormanUtilityClean" BeforeTargets="Clean" Condition="'$(CormanName)'=='CormanLispImage' Or '$(CormanName)'=='CormanLispStatic'">
+    <Delete Files="$(CormanRuntimeDir)CormanLisp.img;$(CormanBuildRoot)logs\image-inputs.sha256" Condition="'$(CormanName)'=='CormanLispImage'" />
+    <Delete Files="$(CormanLibDir)CormanLispStatic.lib" Condition="'$(CormanName)'=='CormanLispStatic'" />
+  </Target>
+  <Target Name="CormanStaticResponse" BeforeTargets="CustomBuild" Condition="'$(CormanName)'=='CormanLispStatic'">
+    <WriteLinesToFile File="$(IntDir)kernel-objects.rsp" Lines="@(CormanKernelObject-&gt;'&quot;%(FullPath)&quot;')" Overwrite="true" WriteOnlyWhenDifferent="true" />
+  </Target>
+</Project>

@@ -1,0 +1,58 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clconsoleapp", "clconsoleapp\clconsoleapp.v143.vcxproj", "{1AD902CC-99F5-48C9-987F-78EA4E80C323}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zlib", "zlib\zlib.v143.vcxproj", "{ADD72BDA-3CBF-4507-A939-26B6181704D7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CormanLispServer", "CormanLispServer\CormanLispServer.v143.vcxproj", "{F9EEF0A3-17DF-4E5A-AA4C-CE02A4819417}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dlltemplate", "dlltemplate\dlltemplate.v143.vcxproj", "{E4FBD4E7-9D25-4FFE-B79E-9188FA148E7B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clboot", "clboot\clboot.v143.vcxproj", "{FB759146-5391-41A2-866A-6DACD2D4F53C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clbootapp", "clbootapp\clbootapp.v143.vcxproj", "{A1827205-23F6-41E3-9B6B-394AC2EF4137}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clconsole", "clconsole\clconsole.v143.vcxproj", "{E418B27C-3322-4E0A-AF52-60E546037FEF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CormanLisp", "CormanLispIDE\CormanLisp.v143.vcxproj", "{30054D8C-D524-4DB3-823A-39499BE27274}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CormanLispStatic", "CormanLispServer\CormanLispStatic.v143.vcxproj", "{80008536-4BA1-45EE-BD05-2649B35D5973}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CormanLispImage", "CormanLispImage\CormanLispImage.v143.vcxproj", "{08CF61A2-1A0C-4B42-BF8D-E3D29A738E21}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicConsole", "build\v143\DynamicConsole.vcxproj", "{0CF3FDC7-29C3-4CC6-8586-F5F90A9EC074}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Standard|Win32 = Standard|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E418B27C-3322-4E0A-AF52-60E546037FEF}.Standard|Win32.ActiveCfg = Standard|Win32
+		{E418B27C-3322-4E0A-AF52-60E546037FEF}.Standard|Win32.Build.0 = Standard|Win32
+		{30054D8C-D524-4DB3-823A-39499BE27274}.Standard|Win32.ActiveCfg = Standard|Win32
+		{30054D8C-D524-4DB3-823A-39499BE27274}.Standard|Win32.Build.0 = Standard|Win32
+		{FB759146-5391-41A2-866A-6DACD2D4F53C}.Standard|Win32.ActiveCfg = Standard|Win32
+		{FB759146-5391-41A2-866A-6DACD2D4F53C}.Standard|Win32.Build.0 = Standard|Win32
+		{F9EEF0A3-17DF-4E5A-AA4C-CE02A4819417}.Standard|Win32.ActiveCfg = Standard|Win32
+		{F9EEF0A3-17DF-4E5A-AA4C-CE02A4819417}.Standard|Win32.Build.0 = Standard|Win32
+		{ADD72BDA-3CBF-4507-A939-26B6181704D7}.Standard|Win32.ActiveCfg = Standard|Win32
+		{ADD72BDA-3CBF-4507-A939-26B6181704D7}.Standard|Win32.Build.0 = Standard|Win32
+		{A1827205-23F6-41E3-9B6B-394AC2EF4137}.Standard|Win32.ActiveCfg = Standard|Win32
+		{A1827205-23F6-41E3-9B6B-394AC2EF4137}.Standard|Win32.Build.0 = Standard|Win32
+		{E4FBD4E7-9D25-4FFE-B79E-9188FA148E7B}.Standard|Win32.ActiveCfg = Standard|Win32
+		{E4FBD4E7-9D25-4FFE-B79E-9188FA148E7B}.Standard|Win32.Build.0 = Standard|Win32
+		{80008536-4BA1-45EE-BD05-2649B35D5973}.Standard|Win32.ActiveCfg = Standard|Win32
+		{80008536-4BA1-45EE-BD05-2649B35D5973}.Standard|Win32.Build.0 = Standard|Win32
+		{08CF61A2-1A0C-4B42-BF8D-E3D29A738E21}.Standard|Win32.ActiveCfg = Standard|Win32
+		{08CF61A2-1A0C-4B42-BF8D-E3D29A738E21}.Standard|Win32.Build.0 = Standard|Win32
+		{1AD902CC-99F5-48C9-987F-78EA4E80C323}.Standard|Win32.ActiveCfg = Standard|Win32
+		{1AD902CC-99F5-48C9-987F-78EA4E80C323}.Standard|Win32.Build.0 = Standard|Win32
+		{0CF3FDC7-29C3-4CC6-8586-F5F90A9EC074}.Standard|Win32.ActiveCfg = Standard|Win32
+		{0CF3FDC7-29C3-4CC6-8586-F5F90A9EC074}.Standard|Win32.Build.0 = Standard|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

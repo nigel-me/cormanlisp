@@ -1,0 +1,12 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <CormanSourceRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\'))</CormanSourceRoot>
+    <CormanBuildRoot>$(CormanSourceRoot).build\v143\ide\$(Platform)\$(Configuration)\</CormanBuildRoot>
+    <CormanRuntimeDir>$(CormanBuildRoot)runtime\</CormanRuntimeDir>
+    <CormanLibDir>$(CormanBuildRoot)lib\</CormanLibDir>
+    <PlatformToolset>v143</PlatformToolset>
+    <VCToolsVersion>14.41.34120</VCToolsVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <UserRootDir>$(CormanBuildRoot)empty-user\</UserRootDir>
+  </PropertyGroup>
+</Project>
