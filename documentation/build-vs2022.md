@@ -2,11 +2,11 @@
 
 Open `src_vc22.sln` in Visual Studio Community 2022 and select **Standard / Win32**. Build Solution builds the default development components and generates the Lisp image. The installer is excluded. This is a 32-bit x86 build; no x64 configuration is provided.
 
-Requires the validated MSVC 14.41.34120 v143 x86 tools, Windows SDK 10.0.26100.0 and MFC/ATL components. Missing tools cause a build error; the build does not install components. Use a normal Windows account: the runtime needs ordinary profile/Documents paths. No elevation, registration or execution-policy changes are required by this build path.
+Requires the validated MSVC 14.44.35207 v143 x86 tools (compiler 19.44.35229.0), Windows SDK 10.0.26100.0 and MFC/ATL components. Missing tools cause a build error; the build does not install components. Use a normal Windows account: the runtime needs ordinary profile/Documents paths. No elevation, registration or execution-policy changes are required by this build path.
 
 The existing `src_vc15.sln`, v140_xp projects and their scripts remain the VS2015 path. New sibling `*.v143.vcxproj` files share the existing C/C++ source. When adding/removing source files, keep both project sets and the v143 static-library object list in sync.
 
-Generated artifacts are isolated under `.build/v143/ide/Win32/Standard`: `obj/<project>` contains compiler intermediates, `lib` contains libraries, `runtime` contains executables/DLLs/PDBs/image and staged resources, and `logs` contains bootstrap evidence. Clean removes generated build outputs; Rebuild recreates them. The separate `build-v143.cmd` continues to build committed snapshots into timestamped directories.
+Generated artifacts are isolated under `.build/v143/ide/Win32/Standard`: `obj/<project>` contains compiler intermediates, `lib` contains libraries, `runtime` contains executables/DLLs/PDBs/image and staged resources, and `logs` contains bootstrap evidence. Clean removes generated build outputs; Rebuild recreates them. The separate `build-v143.cmd` retains the validated MSVC 14.41 reference path and builds committed snapshots into timestamped directories. Keep 14.41 tools and matching MFC/ATL installed to use that driver; the native solution selects 14.44.
 
 Right-click a project in Solution Explorer and choose **Set as Startup Project**, then press F5:
 
