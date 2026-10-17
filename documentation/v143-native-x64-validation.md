@@ -59,7 +59,8 @@ their correctness, test the GUI or experimental hardware GC, or prove general
 runtime correctness. Prior local evidence remains separate.
 
 Treat this exact compiler/SDK combination as the validated modern-build baseline.
-Keep the existing VS2015/v140_xp path and Candidate A unchanged. Evaluate any
+Keep the existing VS2015/v140_xp path and the ESI preservation fix in
+`CormanLispServer/include/Lisp.h` unchanged. Evaluate any
 new compiler separately against this baseline with the same stable suite,
 build/disassembly checks and manual debugger/GUI gate before adopting it.
 
