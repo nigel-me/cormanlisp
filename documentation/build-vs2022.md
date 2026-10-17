@@ -2,6 +2,8 @@
 
 The pinned 14.44 toolchain passed the [native-x64 host comparison](v143-native-x64-validation.md): 120 stable threading repetitions and nine non-callback core checks across original v140 and v143 static/dynamic runtimes. See that record for exact versions, evidence and excluded baseline issues.
 
+The unchanged solution also passed build, runtime and manual debugger checks in [VS2026 Community 18.11 using the same v143 toolchain](vs2026-v143-validation.md). Retain the pinned compiler and SDK when opening it in VS2026; this does not validate v145.
+
 Open `src_vc22.sln` in Visual Studio Community 2022 and select **Standard / Win32**. Build Solution builds the default development components and generates the Lisp image. The installer is excluded. This is a 32-bit x86 build; no x64 configuration is provided.
 
 Requires the validated MSVC 14.44.35207 v143 x86 tools (compiler 19.44.35229.0), Windows SDK 10.0.26100.0 and MFC/ATL components. Missing tools cause a build error; the build does not install components. Use a normal Windows account: the runtime needs ordinary profile/Documents paths. No elevation, registration or execution-policy changes are required by this build path.
