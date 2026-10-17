@@ -1,5 +1,7 @@
 # VS2022 IDE build and debugging
 
+The pinned 14.44 toolchain passed the [native-x64 host comparison](v143-native-x64-validation.md): 120 stable threading repetitions and nine non-callback core checks across original v140 and v143 static/dynamic runtimes. See that record for exact versions, evidence and excluded baseline issues.
+
 Open `src_vc22.sln` in Visual Studio Community 2022 and select **Standard / Win32**. Build Solution builds the default development components and generates the Lisp image. The installer is excluded. This is a 32-bit x86 build; no x64 configuration is provided.
 
 Requires the validated MSVC 14.44.35207 v143 x86 tools (compiler 19.44.35229.0), Windows SDK 10.0.26100.0 and MFC/ATL components. Missing tools cause a build error; the build does not install components. Use a normal Windows account: the runtime needs ordinary profile/Documents paths. No elevation, registration or execution-policy changes are required by this build path.
