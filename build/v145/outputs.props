@@ -1,0 +1,36 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutDir>$(CormanRuntimeDir)</OutDir>
+    <IntDir>$(CormanBuildRoot)obj\$(CormanName)\</IntDir>
+    <TargetName>$(CormanName)</TargetName>
+    <LocalDebuggerCommand>$(CormanRuntimeDir)$(CormanName).exe</LocalDebuggerCommand>
+    <LocalDebuggerCommandArguments>-image &quot;$(CormanRuntimeDir)CormanLisp.img&quot;</LocalDebuggerCommandArguments>
+    <LocalDebuggerWorkingDirectory>$(CormanRuntimeDir)</LocalDebuggerWorkingDirectory>
+    <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CormanName)'=='zlib' Or '$(CormanName)'=='CormanLispStatic'">
+    <OutDir>$(CormanLibDir)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(CormanName)'=='CormanLisp'">
+    <LocalDebuggerCommandArguments>&quot;$(CormanRuntimeDir)CormanLisp.img&quot;</LocalDebuggerCommandArguments>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <ProgramDataBaseFileName>$(IntDir)$(CormanName).compiler.pdb</ProgramDataBaseFileName>
+      <PrecompiledHeaderOutputFile>$(IntDir)$(CormanName).pch</PrecompiledHeaderOutputFile>
+    </ClCompile>
+    <ResourceCompile><ResourceOutputFileName>$(IntDir)%(Filename).res</ResourceOutputFileName></ResourceCompile>
+    <Midl><OutputDirectory>$(IntDir)</OutputDirectory><TypeLibraryName>$(IntDir)$(CormanName).tlb</TypeLibraryName></Midl>
+    <Link>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <ImportLibrary>$(CormanLibDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+    <Lib><OutputFile>$(CormanLibDir)$(TargetName).lib</OutputFile></Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(CormanName)'=='CormanLispServer'">
+    <ClCompile><OmitFramePointers>false</OmitFramePointers><CallingConvention>Cdecl</CallingConvention></ClCompile>
+  </ItemDefinitionGroup>
+</Project>
